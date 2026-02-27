@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\osu_standard\Drush\Commands;
+namespace Drupal\cas_standard\Drush\Commands;
 
 use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
 use Drupal\cas\Service\CasUserManager;

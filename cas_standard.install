@@ -20,7 +20,7 @@ use Drupal\user\Entity\User;
 /**
  * Implements hook_install().
  */
-function osu_standard_install($is_syncing): void {
+function cas_standard_install($is_syncing): void {
   // Assign user 1 the "administrator" role.
   /** @var \Drupal\user\Entity\User $user */
   $user = User::load(1);
@@ -58,14 +58,14 @@ function osu_standard_install($is_syncing): void {
 /**
  * Implements hook_update_last_removed().
  */
-function osu_standard_update_last_removed() {
+function cas_standard_update_last_removed() {
   return 9000;
 }
 
 /**
  * Updating paddings and margins.
  */
-function osu_standard_update_10000(&$sandbox): void {
+function cas_standard_update_10000(&$sandbox): void {
   $padding = "p-1|Padding 1\r\np-2|Padding 2\r\np-2-5|Padding 2.5\r\np-3|Padding 3\r\np-4|Padding 4\r\np-4-5|Padding 4_5\r\np-5|Padding 5\r\np-6|Padding 6\r\np-7|Padding 7";
   $padding_left = "ps-1|Padding Left 1\r\nps-2|Padding Left 2\r\nps-2-5|Padding Left 2.5\r\nps-3|Padding Left 3\r\nps-4|Padding Left 4\r\nps-4-5|Padding Left 4_5\r\nps-5|Padding Left 5\r\nps-6|Padding Left 6\r\nps-7|Padding 7";
   $padding_top = "pt-1|Padding Top 1\r\npt-2|Padding Top 2\r\npt-2-5|Padding Top 2.5\r\npt-3|Padding Top 3\r\npt-4|Padding Top 4\r\npt-4-5|Padding Top 4_5\r\npt-5|Padding Top 5\r\npt-6|Padding Top 6\r\npt-7|Padding 7";
@@ -94,7 +94,7 @@ function osu_standard_update_10000(&$sandbox): void {
 /**
  * Update Roles to now manage Block Content.
  */
-function osu_standard_update_10001(&$sandbox): void {
+function cas_standard_update_10001(&$sandbox): void {
   $dx_administrator = Role::load('dx_administrator');
   $dx_administrator->grantPermission('access block library');
   $dx_administrator->grantPermission('administer block content');
@@ -118,7 +118,7 @@ function osu_standard_update_10001(&$sandbox): void {
 /**
  * Update Editoria11y to wait for our custom tests.
  */
-function osu_standard_update_10002(&$sandbox): void {
+function cas_standard_update_10002(&$sandbox): void {
   /** @var Drupal\Core\Config\Config $editoria11y_settings */
   $editoria11y_settings = Drupal::service('config.factory')
     ->getEditable('editoria11y.settings');
@@ -129,7 +129,7 @@ function osu_standard_update_10002(&$sandbox): void {
 /**
  * Update permissions to allow users to delete files.
  */
-function osu_standard_update_10003(&$sandbox): void {
+function cas_standard_update_10003(&$sandbox): void {
   $dx_administrator = Role::load('dx_administrator');
   $dx_administrator->grantPermission('delete any file');
   $dx_administrator->grantPermission('delete own files');
@@ -159,7 +159,7 @@ function osu_standard_update_10003(&$sandbox): void {
 /**
  * Rollback Search404 configuration setting.
  */
-function osu_standard_update_10004(&$sandbox): void {
+function cas_standard_update_10004(&$sandbox): void {
   Drupal::configFactory()
     ->getEditable('system.site')
     ->set('page.404', '')
@@ -169,7 +169,7 @@ function osu_standard_update_10004(&$sandbox): void {
 /**
  * Set the Default option for Madrone Theme 404 page.
  */
-function osu_standard_update_10005(&$sandbox): void {
+function cas_standard_update_10005(&$sandbox): void {
   $config_factory = Drupal::configFactory();
   $editable_config = $config_factory->getEditable('system.theme');
   $default_theme = $editable_config->get('default');
@@ -181,10 +181,10 @@ function osu_standard_update_10005(&$sandbox): void {
 /**
  * Setup Linkpurpose module.
  */
-function osu_standard_update_10006(&$sandbox): TranslatableMarkup {
-  osu_standard_install_modules(['linkpurpose']);
+function cas_standard_update_10006(&$sandbox): TranslatableMarkup {
+  cas_standard_install_modules(['linkpurpose']);
   $install_profile_path = Drupal::service('module_handler')
-    ->getModule('osu_standard')
+    ->getModule('cas_standard')
     ->getPath();
 
   $config_path = realpath($install_profile_path . '/config/install');
@@ -199,8 +199,8 @@ function osu_standard_update_10006(&$sandbox): TranslatableMarkup {
     'manage_site_configuration',
   ];
 
-  osu_standard_grant_permissions($user_roles, ['administer linkpurpose']);
-  osu_standard_grant_permissions([$user_roles[2]], ['administer linkit profiles']);
+  cas_standard_grant_permissions($user_roles, ['administer linkpurpose']);
+  cas_standard_grant_permissions([$user_roles[2]], ['administer linkit profiles']);
 
   return t('Installed module and imported configuration');
 }
@@ -208,13 +208,13 @@ function osu_standard_update_10006(&$sandbox): TranslatableMarkup {
 /**
  * Add two new options for layout builder 2 column.
  */
-function osu_standard_update_10007(&$sandbox): TranslatableMarkup {
+function cas_standard_update_10007(&$sandbox): TranslatableMarkup {
   $bootstrap_layout_builder_updates = [
     'bootstrap_layout_builder.layout_option.blb_col_2_33_67',
     'bootstrap_layout_builder.layout_option.blb_col_2_67_33',
   ];
   $install_profile_path = Drupal::service('module_handler')
-    ->getModule('osu_standard')
+    ->getModule('cas_standard')
     ->getPath();
   $config_path = realpath($install_profile_path . '/config/install');
   /** @var \Drupal\Core\Config\CachedStorage $config_storage */
@@ -231,7 +231,7 @@ function osu_standard_update_10007(&$sandbox): TranslatableMarkup {
 /**
  * Add osu-align-items-stretch option back into Bootstrap Styles.
  */
-function osu_standard_update_10008(&$sandbox): TranslatableMarkup {
+function cas_standard_update_10008(&$sandbox): TranslatableMarkup {
   $bootstrap_style_updates = [
     "items_alignment" => "osu-align-items-stretch|Stretch\r\nosu-align-items-start|Top\r\nosu-align-items-center|Center\r\nosu-align-items-end|Bottom",
   ];
@@ -247,26 +247,26 @@ function osu_standard_update_10008(&$sandbox): TranslatableMarkup {
 /**
  * Permit DX, Architect, and manage Webform to use the Webform filter format.
  */
-function osu_standard_update_10009(&$sandbox): TranslatableMarkup {
+function cas_standard_update_10009(&$sandbox): TranslatableMarkup {
   $user_roles = [
     'dx_administrator',
     'architect',
     'manage_webforms',
   ];
-  osu_standard_grant_permissions($user_roles, ['use text format webform_default']);
+  cas_standard_grant_permissions($user_roles, ['use text format webform_default']);
   return t('Granted permissions for DX Administrators, Architects and Manage Webforms the access to use the webform filter format.');
 }
 
 /**
  * Grant the ability to view and see editoria11y results to our content authors.
  */
-function osu_standard_update_10010(&$sandbox): TranslatableMarkup {
+function cas_standard_update_10010(&$sandbox): TranslatableMarkup {
   $user_roles = [
     'content_authors',
     'manage_blocks',
     'manage_content',
   ];
-  osu_standard_grant_permissions($user_roles, [
+  cas_standard_grant_permissions($user_roles, [
     'access site reports',
     'manage editoria11y results',
     'mark as hidden in editoria11y',
@@ -279,10 +279,10 @@ function osu_standard_update_10010(&$sandbox): TranslatableMarkup {
 /**
  * Add a new module purge_file and configure the processor.
  */
-function osu_standard_update_10011(&$sandbox): TranslatableMarkup {
-  osu_standard_install_modules(['purge_file']);
+function cas_standard_update_10011(&$sandbox): TranslatableMarkup {
+  cas_standard_install_modules(['purge_file']);
   $install_profile_path = Drupal::service('module_handler')
-    ->getModule('osu_standard')
+    ->getModule('cas_standard')
     ->getPath();
   $config_path = realpath($install_profile_path . '/config/install');
   /** @var \Drupal\Core\Config\CachedStorage $config_storage */
@@ -296,7 +296,7 @@ function osu_standard_update_10011(&$sandbox): TranslatableMarkup {
 /**
  * Update Fontawesome icon CSN version.
  */
-function osu_standard_update_10012(&$sandbox): TranslatableMarkup {
+function cas_standard_update_10012(&$sandbox): TranslatableMarkup {
   $fontawesome_settings = Drupal::configFactory()
     ->getEditable('fontawesome.settings');
   $fontawesome_settings->set('external_svg_location', "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css");
@@ -308,7 +308,7 @@ function osu_standard_update_10012(&$sandbox): TranslatableMarkup {
 /**
  * Update the CAS login Path.
  */
-function osu_standard_update_10013(&$sandbox): TranslatableMarkup {
+function cas_standard_update_10013(&$sandbox): TranslatableMarkup {
   $cas_settings = Drupal::configFactory()->getEditable('cas.settings');
   $cas_server_settings = $cas_settings->get('server');
   $cas_server_settings['path'] = '/cas';
@@ -320,7 +320,7 @@ function osu_standard_update_10013(&$sandbox): TranslatableMarkup {
 /**
  * Remove the DrupalFile CKEditor button.
  */
-function osu_standard_update_10014(&$sandbox): TranslatableMarkup {
+function cas_standard_update_10014(&$sandbox): TranslatableMarkup {
   // Load the 'full_html' editor configuration.
   $config_factory = Drupal::service('config.factory');
   $editor_config = $config_factory->getEditable('editor.editor.full_html');
@@ -371,7 +371,7 @@ function osu_standard_update_10014(&$sandbox): TranslatableMarkup {
 /**
  * Add other embed modes for media.
  */
-function osu_standard_update_10015(&$sandbox): TranslatableMarkup {
+function cas_standard_update_10015(&$sandbox): TranslatableMarkup {
   // Load the 'full_html' filter configuration.
   $config_factory = Drupal::service('config.factory');
   $editor_config = $config_factory->getEditable('filter.format.full_html');
@@ -395,7 +395,7 @@ function osu_standard_update_10015(&$sandbox): TranslatableMarkup {
 /**
  * Update Editoria11y and Linkpurpose.
  */
-function osu_standard_update_10016(&$sandbox): TranslatableMarkup {
+function cas_standard_update_10016(&$sandbox): TranslatableMarkup {
   $editoria11y_ignore_elements = [
     '.block-local-tasks-block *',
     '.block-group-operations *',
@@ -435,7 +435,7 @@ function osu_standard_update_10016(&$sandbox): TranslatableMarkup {
 /**
  * Add Meta Image to Basic Page and set up Metatag defaults.
  */
-function osu_standard_update_10017(&$sandbox): TranslatableMarkup {
+function cas_standard_update_10017(&$sandbox): TranslatableMarkup {
   $install_profile_source_path = _get_install_profile_source_path();
 
   try {
@@ -443,7 +443,7 @@ function osu_standard_update_10017(&$sandbox): TranslatableMarkup {
       ->save();
   }
   catch (EntityStorageException $e) {
-    Drupal::logger('osu_standard')->error($e->getMessage());
+    Drupal::logger('cas_standard')->error($e->getMessage());
     throw $e;
   }
 
@@ -452,7 +452,7 @@ function osu_standard_update_10017(&$sandbox): TranslatableMarkup {
       ->save();
   }
   catch (EntityStorageException $e) {
-    Drupal::logger('osu_standard')->error($e->getMessage());
+    Drupal::logger('cas_standard')->error($e->getMessage());
     throw $e;
   }
   /** @var \Drupal\Core\Config\CachedStorage $config_storage */
@@ -489,8 +489,8 @@ function osu_standard_update_10017(&$sandbox): TranslatableMarkup {
 /**
  * Add filter_perms module and update module filter settings.
  */
-function osu_standard_update_10018(&$sandbox): TranslatableMarkup {
-  osu_standard_install_modules(['filter_perms']);
+function cas_standard_update_10018(&$sandbox): TranslatableMarkup {
+  cas_standard_install_modules(['filter_perms']);
   /** @var \Drupal\Core\Config\Config $module_filter_settings */
   $module_filter_settings = Drupal::service('config.factory')
     ->getEditable('module_filter.settings');
@@ -502,24 +502,24 @@ function osu_standard_update_10018(&$sandbox): TranslatableMarkup {
 /**
  * Adding focal point module and permissions.
  */
-function osu_standard_update_10019(&$sandbox): TranslatableMarkup {
-  osu_standard_install_modules(['crop', 'focal_point']);
+function cas_standard_update_10019(&$sandbox): TranslatableMarkup {
+  cas_standard_install_modules(['crop', 'focal_point']);
   $roles = [
     'dx_administrator',
     'architect',
     'manage_site_configuration',
   ];
-  osu_standard_grant_permissions($roles, ['administer crop types']);
+  cas_standard_grant_permissions($roles, ['administer crop types']);
   // Just grant Administer crop to dx, doesn't seem to be used for focal.
-  osu_standard_grant_permissions(['dx_administrator'], ['administer crop']);
+  cas_standard_grant_permissions(['dx_administrator'], ['administer crop']);
   return t("Add Focal Point, Crop module and permissions");
 }
 
 /**
  * Set up ImageMagick for all sites.
  */
-function osu_standard_update_10020(&$sandbox): TranslatableMarkup {
-  osu_standard_install_modules(['imagemagick']);
+function cas_standard_update_10020(&$sandbox): TranslatableMarkup {
+  cas_standard_install_modules(['imagemagick']);
   /** @var \Drupal\Core\Config\Config $image_toolkit */
   $image_toolkit = Drupal::service('config.factory')
     ->getEditable('system.image');
@@ -531,8 +531,8 @@ function osu_standard_update_10020(&$sandbox): TranslatableMarkup {
 /**
  * Enable and use the Responsive Table filter plugin.
  */
-function osu_standard_update_10021(&$sandbox): TranslatableMarkup {
-  osu_standard_install_modules(['responsive_table_filter']);
+function cas_standard_update_10021(&$sandbox): TranslatableMarkup {
+  cas_standard_install_modules(['responsive_table_filter']);
   /** @var \Drupal\Core\Config\ConfigFactory $config_factory */
   $config_factory = Drupal::service('config.factory');
   /** @var \Drupal\Core\Config\Config $editor_config */
@@ -583,8 +583,8 @@ function osu_standard_update_10021(&$sandbox): TranslatableMarkup {
 /**
  * Sitewide Alerts for all OSU Drupal.
  */
-function osu_standard_update_10022(&$sandbox): TranslatableMarkup {
-  osu_standard_install_modules(['sitewide_alert', 'osu_sitewide_alert']);
+function cas_standard_update_10022(&$sandbox): TranslatableMarkup {
+  cas_standard_install_modules(['sitewide_alert', 'osu_sitewide_alert']);
   $install_profile_source_path = _get_install_profile_source_path();
   $sitewide_alert_config = $install_profile_source_path->read('sitewide_alert.settings');
   // Setup the default settings for our site.
@@ -625,9 +625,9 @@ function osu_standard_update_10022(&$sandbox): TranslatableMarkup {
     'use text format text_and_links',
     'view all sitewide alert revisions',
   ];
-  osu_standard_grant_permissions($view_roles, [$view_perm]);
-  osu_standard_grant_permissions($manage_roles, $manage_perms);
-  osu_standard_grant_permissions($full_access_roles, $full_access_perms);
+  cas_standard_grant_permissions($view_roles, [$view_perm]);
+  cas_standard_grant_permissions($manage_roles, $manage_perms);
+  cas_standard_grant_permissions($full_access_roles, $full_access_perms);
 
   return t('Sitewide Alerts installed and configured');
 }
@@ -635,7 +635,7 @@ function osu_standard_update_10022(&$sandbox): TranslatableMarkup {
 /**
  * Update FontAwesome version.
  */
-function osu_standard_update_10023(&$sandbox): TranslatableMarkup {
+function cas_standard_update_10023(&$sandbox): TranslatableMarkup {
   /** @var \Drupal\Core\Config\ConfigFactory $config_factory */
   $config_factory = Drupal::service('config.factory');
   /** @var \Drupal\Core\Config\Config $fontawesome_settings */
@@ -649,17 +649,17 @@ function osu_standard_update_10023(&$sandbox): TranslatableMarkup {
 /**
  * Grant new permissions for osu_roles.
  */
-function osu_standard_update_10024(&$sandbox): TranslatableMarkup {
+function cas_standard_update_10024(&$sandbox): TranslatableMarkup {
   $theme_admin = ['dx_administrator', 'architect', 'manage_site_configuration'];
   $theme_admin_perms = ['administer madrone theme'];
-  osu_standard_grant_permissions($theme_admin, $theme_admin_perms);
+  cas_standard_grant_permissions($theme_admin, $theme_admin_perms);
   return t('Granted new permissions for osu_roles');
 }
 
 /**
  * Update permissions for the Sitewide Alerts.
  */
-function osu_standard_update_10025(&$sandbox): TranslatableMarkup {
+function cas_standard_update_10025(&$sandbox): TranslatableMarkup {
   $roles = ['architect', 'alert_author'];
   $perm = 'administer sitewide alert entities';
 
@@ -677,7 +677,7 @@ function osu_standard_update_10025(&$sandbox): TranslatableMarkup {
  *
  * Updating Exclude node title.
  */
-function osu_standard_update_10026(&$sandbox): TranslatableMarkup {
+function cas_standard_update_10026(&$sandbox): TranslatableMarkup {
   /** @var \Drupal\Core\Config\ConfigFactory $config_factory */
   $config_factory = Drupal::service('config.factory');
   /** @var \Drupal\Core\Config\Config $exclude_node_title */
@@ -691,7 +691,7 @@ function osu_standard_update_10026(&$sandbox): TranslatableMarkup {
 /**
  * Remove Asset Injector if CSS and JS Injectors are empty.
  */
-function osu_standard_update_10027(&$sandbox): TranslatableMarkup {
+function cas_standard_update_10027(&$sandbox): TranslatableMarkup {
   $injectors_css = $injectors_js = [];
   try {
     $injectors_css = Drupal::entityTypeManager()
@@ -699,7 +699,7 @@ function osu_standard_update_10027(&$sandbox): TranslatableMarkup {
       ->loadMultiple();
   }
   catch (InvalidPluginDefinitionException|PluginNotFoundException $e) {
-    Drupal::logger('osu_standard')->error($e->getMessage());
+    Drupal::logger('cas_standard')->error($e->getMessage());
   }
   try {
     $injectors_js = Drupal::entityTypeManager()
@@ -707,7 +707,7 @@ function osu_standard_update_10027(&$sandbox): TranslatableMarkup {
       ->loadMultiple();
   }
   catch (InvalidPluginDefinitionException|PluginNotFoundException $e) {
-    Drupal::logger('osu_standard')->error($e->getMessage());
+    Drupal::logger('cas_standard')->error($e->getMessage());
   }
   if (is_countable($injectors_css) && count($injectors_css) === 0 && is_countable($injectors_js) && count($injectors_js) === 0) {
     // Uninstall module.
@@ -747,7 +747,7 @@ function osu_standard_update_10027(&$sandbox): TranslatableMarkup {
 /**
  * Update Editoria11y settings.
  */
-function osu_standard_update_10028(&$sandbox): TranslatableMarkup {
+function cas_standard_update_10028(&$sandbox): TranslatableMarkup {
   /** @var \Drupal\Core\Config\ConfigFactory $config_factory */
   $config_factory = Drupal::service('config.factory');
   /** @var \Drupal\Core\Config\Config $editoria11y_settings */
@@ -767,9 +767,9 @@ function osu_standard_update_10028(&$sandbox): TranslatableMarkup {
 /**
  * Update required modules and permissions.
  */
-function osu_standard_update_10029(&$sandbox): TranslatableMarkup {
+function cas_standard_update_10029(&$sandbox): TranslatableMarkup {
   Drupal::service('module_installer')->uninstall(['editor_file']);
-  osu_standard_grant_permissions([
+  cas_standard_grant_permissions([
     'dx_administrator',
     'architect',
   ], ['access help pages']);
@@ -779,8 +779,8 @@ function osu_standard_update_10029(&$sandbox): TranslatableMarkup {
 /**
  * Add Token URL Plus module.
  */
-function osu_standard_update_10030(&$sandbox): TranslatableMarkup {
-  osu_standard_install_modules(['token_url_plus']);
+function cas_standard_update_10030(&$sandbox): TranslatableMarkup {
+  cas_standard_install_modules(['token_url_plus']);
   return t('Added Token URL Plus module, util such time that the feature is merged into token itself.');
 }
 
@@ -794,7 +794,7 @@ function osu_standard_update_10030(&$sandbox): TranslatableMarkup {
  * @throws \Drupal\Core\Extension\ExtensionNameReservedException
  * @throws \Drupal\Core\Extension\MissingDependencyException
  */
-function osu_standard_install_modules(array $modules): void {
+function cas_standard_install_modules(array $modules): void {
   // Load the module handler and module installer services.
   $module_handler = Drupal::moduleHandler();
   /** @var \Drupal\Core\ProxyClass\Extension\ModuleInstaller $module_installer */
@@ -818,7 +818,7 @@ function osu_standard_install_modules(array $modules): void {
  *
  * @throws \Exception
  */
-function osu_standard_grant_permissions(array $roles, array $permissions): void {
+function cas_standard_grant_permissions(array $roles, array $permissions): void {
   // Load User Storage Service.
   try {
     $role_storage = Drupal::entityTypeManager()->getStorage('user_role');
@@ -832,7 +832,7 @@ function osu_standard_grant_permissions(array $roles, array $permissions): void 
     }
   }
   catch (InvalidPluginDefinitionException|PluginNotFoundException $e) {
-    Drupal::logger('osu_standard')->error($e->getMessage());
+    Drupal::logger('cas_standard')->error($e->getMessage());
     throw new Exception('Unable to load user role storage.');
   }
 }
@@ -846,7 +846,7 @@ function osu_standard_grant_permissions(array $roles, array $permissions): void 
  */
 function _get_install_profile_source_path(): FileStorage {
   $install_profile_path = Drupal::service('module_handler')
-    ->getModule('osu_standard')
+    ->getModule('cas_standard')
     ->getPath();
   $config_path = realpath($install_profile_path . '/config/install');
   return new FileStorage($config_path);

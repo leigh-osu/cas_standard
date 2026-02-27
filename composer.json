@@ -1,13 +1,13 @@
 {
-  "name": "osu-wams/osu_standard",
-  "description": "Standard Drupal Installation Profile for OSU.",
+  "name": "leigh-osu/cas_standard",
+  "description": "Standard Drupal Installation Profile for OSU College of Agricultural Sciences.",
   "minimum-stability": "stable",
   "type": "drupal-custom-profile",
   "license": "GPL-2.0-or-later",
   "authors": [
     {
-      "name": "Matthew Brabham",
-      "email": "matthew.brabham@oregonstate.edu"
+      "name": "Roger Leigh",
+      "email": "roger.leigh@oregonstate.edu"
     }
   ],
   "scripts": {

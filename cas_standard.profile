@@ -11,7 +11,7 @@ use Drupal\user\Entity\User;
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function osu_standard_form_install_configure_form_alter(&$form, FormStateInterface $formState) {
+function cas_standard_form_install_configure_form_alter(&$form, FormStateInterface $formState) {
   // Set some placeholder text for this.
   $form['site_information']['site_mail']['#default_value'] = 'noreply@mail.drupal.oregonstate.edu';
   $form['site_information']['site_name']['#attributes']['placeholder'] = t('OSU Site');
@@ -31,13 +31,13 @@ function osu_standard_form_install_configure_form_alter(&$form, FormStateInterfa
 /**
  * Implements hook_install_tasks().
  */
-function osu_standard_install_tasks(&$install_state) {
+function cas_standard_install_tasks(&$install_state) {
   $tasks = [];
-  $tasks['osu_standard_default_modules'] = [
+  $tasks['cas_standard_default_modules'] = [
     'display_name' => t('Add Modules.'),
     'display' => TRUE,
   ];
-  $tasks['osu_standard_update_default_configuration'] = [
+  $tasks['cas_standard_update_default_configuration'] = [
     'display_name' => t('Update provided configurations'),
     'display' => TRUE,
   ];
@@ -53,7 +53,7 @@ function osu_standard_install_tasks(&$install_state) {
  * @param array $install_state
  *   The Drupal Install State.
  */
-function osu_standard_default_modules(array &$install_state) {
+function cas_standard_default_modules(array &$install_state) {
   \Drupal::service('module_installer')->install([
     'ckeditor_div_manager',
     'osu_block_types',
@@ -79,7 +79,7 @@ function osu_standard_default_modules(array &$install_state) {
  * @param array $install_state
  *   The Drupal Install State.
  */
-function osu_standard_update_default_configuration(array &$install_state) {
+function cas_standard_update_default_configuration(array &$install_state) {
   $site_host = \Drupal::request()->getHost();
   $site_host = str_replace(['dev.', 'stage.'], '', $site_host);
 
