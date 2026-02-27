@@ -74,6 +74,7 @@ dependencies:
   - ctools_views
   - date_ap_style
   - default_content
+  - domain_access
   - dropzonejs
   - easy_breadcrumb
   - editor_advanced_link
@@ -168,5 +169,5 @@ dependencies:
 themes:
   # Core Themes
   - claro
-  # OSU Theme
-  - madrone
+  # CAS Theme
+  - manzanita
